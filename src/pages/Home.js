@@ -16,7 +16,7 @@ const Home = () => {
             <section id="one">
                 <Container className="d-flex flex-column align-items-center justify-content-center" style={{ height: "100vh" }}>
                     <Row className="bg-primary text-white p-5" style={{ height: "60%" }} >
-                        <Col m className="d-flex align-items-center justify-content-center">
+                        <Col md className="d-flex align-items-center justify-content-center">
                             <CollectionPlayFill size={100} />
                         </Col>
                         <Col className="d-flex align-items-center justify-content-center">
