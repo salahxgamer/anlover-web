@@ -23,8 +23,11 @@ function App() {
       <Router>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<AppContainer />} >
+            <Route path="/" element={<AppContainer showSideBar={false} />} >
               <Route index element={<Home />} />
+            </Route>
+
+            <Route path="/" element={<AppContainer />} >
               <Route exact path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
               <Route exact path="update-profile" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
             </Route>
