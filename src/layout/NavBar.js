@@ -1,6 +1,7 @@
 import { Container, Nav, Navbar, NavDropdown } from 'react-bootstrap';
-import { ChatLeftHeart, PersonCircle } from 'react-bootstrap-icons';
+import { PersonCircle } from 'react-bootstrap-icons';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
+import Brand from '../components/Brand';
 import { useAuth } from "../contexts/AuthContext"
 
 
@@ -12,7 +13,7 @@ function NavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark" onSelect={navigate} >
             <Container>
-                <Navbar.Brand as={NavLink} to="/">AnLover <ChatLeftHeart color="red" /></Navbar.Brand>
+                <Navbar.Brand as={NavLink} to="/"><Brand /></Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto" activeKey={location.pathname}>
