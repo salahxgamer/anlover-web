@@ -14,6 +14,7 @@ import Home from "./pages/Home";
 import PrivateRoute from "./components/PrivateRoute"
 import Modal from "./layout/Modal"
 import AppContainer from "./layout/AppContainer"
+import Animes from "./pages/Animes";
 
 
 
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<AppContainer />} >
               <Route exact path="profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
               <Route exact path="update-profile" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
+              <Route exact path="animes" element={<PrivateRoute><Animes /></PrivateRoute>} />
             </Route>
 
             <Route path="/" element={<Modal />} >
