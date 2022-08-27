@@ -1,0 +1,17 @@
+.anime-card {
+
+    transition: transform 0.2s ease-in-out;
+    width: 15rem;
+
+    &:hover {
+        transform: scale(1.1);
+    }
+
+    .cover {
+        background-color: gray;
+        background-size: cover;
+        background-position: center;
+        height: 20rem;
+        width: 15rem;
+    }
+}
