@@ -41,4 +41,15 @@ export default class API {
 
         console.error(`Invalid order_by or list_type`);
     }
+
+    /**
+     * @param  {} anime_id Anime id
+     */
+    static getAnime(anime_id) {
+        let params = `anime_id=${anime_id}&fetch_episodes=Yes&more_info=Yes`
+        return fetch(`${this.BASE_URL}/anime/get-anime-details?${params}`, { method: 'GET', headers: this.AUTH_HEADERS })
+            .then(response => response.json())
+            .then(response => response.response)
+            .catch((error, data) => { console.error(error, data); return {} })
+    }
 }
