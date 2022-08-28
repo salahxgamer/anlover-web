@@ -1,7 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-import { Container, Row, Col, Spinner, Table, Badge, Accordion } from 'react-bootstrap';
+import { Container, Row, Col, Spinner, Table, Badge, Accordion, Card } from 'react-bootstrap';
+import { StarFill, EyeFill, EyeSlashFill, ChatLeftText } from 'react-bootstrap-icons';
+import { Link } from 'react-router-dom';
 import { withParams } from '../utils/helper';
 import API from '../utils/api';
 
@@ -47,7 +49,7 @@ class Anime extends Component {
                 </h1 >
                 {!loading &&
                     <Container fluid>
-                        <Row className="position-relative">
+                        <Row className="position-relative mb-5">
 
                             {/* Background image */}
                             <div className="position-absolute h-100" style={{
@@ -75,7 +77,7 @@ class Anime extends Component {
                                     <h2> {anime.anime_name} </h2>
 
 
-                                    <Accordion defaultActiveKey={["description", "info", "rating"]} alwaysOpen flush
+                                    <Accordion defaultActiveKey={["description", "details", "rating"]} alwaysOpen flush
                                         style={{
                                             "--bs-accordion-color": "auto",
                                             "--bs-accordion-bg": "none",
@@ -92,32 +94,32 @@ class Anime extends Component {
                                     >
 
                                         <Accordion.Item eventKey="description">
-                                            <Accordion.Header>Description</Accordion.Header>
+                                            <Accordion.Header><h5 className="m-0">Description</h5></Accordion.Header>
                                             <Accordion.Body>
                                                 <p> {anime.anime_description}</p>
                                             </Accordion.Body>
                                         </Accordion.Item>
 
-                                        <Accordion.Item eventKey="info">
-                                            <Accordion.Header>Info</Accordion.Header>
+                                        <Accordion.Item eventKey="details">
+                                            <Accordion.Header><h5 className="m-0">Details</h5></Accordion.Header>
                                             <Accordion.Body>
-                                                {/* Anime info table */}
+                                                {/* Anime details table */}
                                                 <Table striped variant="dark" size="sm">
                                                     <tbody>
-                                                        <tr><td>Year :        </td><td>{anime.anime_release_year}</td></tr>
-                                                        <tr><td>Studio :        </td><td>{anime.more_info_result?.anime_studios}</td></tr>
-                                                        <tr><td>Episodes :      </td><td>{anime.more_info_result?.episodes}</td></tr>
-                                                        <tr><td>Rating :        </td><td>{anime.anime_rating}</td></tr>
-                                                        <tr><td>Genres :        </td><td>{anime.anime_genres}</td></tr>
-                                                        <tr><td>Duration :      </td><td>{anime.more_info_result?.duration}</td></tr>
-                                                        <tr><td>Airing status : </td><td>{anime.anime_status}</td></tr>
+                                                        <tr><td>Year        </td><td>{anime.anime_release_year}</td></tr>
+                                                        <tr><td>Studio        </td><td>{anime.more_info_result?.anime_studios}</td></tr>
+                                                        <tr><td>Episodes      </td><td>{anime.more_info_result?.episodes || anime.episodes?.data?.length}</td></tr>
+                                                        <tr><td>Rating        </td><td>{anime.anime_rating}</td></tr>
+                                                        <tr><td>Genres        </td><td>{anime.anime_genres}</td></tr>
+                                                        <tr><td>Duration      </td><td>{anime.more_info_result?.duration}</td></tr>
+                                                        <tr><td>Airing status </td><td>{anime.anime_status}</td></tr>
                                                     </tbody>
                                                 </Table>
                                             </Accordion.Body>
                                         </Accordion.Item>
 
                                         <Accordion.Item eventKey="rating">
-                                            <Accordion.Header>Rating</Accordion.Header>
+                                            <Accordion.Header><h5 className="m-0">Rating</h5></Accordion.Header>
                                             <Accordion.Body>
                                                 {/* Anime content ratings */}
                                                 {anime.content_rating.map(rating =>
@@ -133,10 +135,34 @@ class Anime extends Component {
                             </Col>
                         </Row>
                         <Row>
+                            <h2>Trailer :</h2>
                             <Col>
                                 <div className="p-5 d-flex justify-content-center align-items-center">
                                     <ReactPlayer className="rounded shadow overflow-hidden" url={anime.more_info_result.trailer_url} controls light pip playing />
                                 </div>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <h2 id="episodes">Episodes : {anime.more_info_result?.episodes || anime.episodes?.data?.length}</h2>
+
+                                <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
+                                    {anime.episodes.data.map(episode =>
+                                        <Link key={episode.episode_number} to={`/episode/${episode.episode_id}`} className="text-decoration-none text-reset">
+                                            <Card className="shadow-sm m-2" bg="light" style={{ width: "10rem" }}>
+                                                <Card.Body>
+                                                    <Card.Title className="h6 text-truncate" title={episode.episode_name}>{episode.episode_name}</Card.Title>
+                                                    <Card.Text className="d-flex justify-content-between align-items-center">
+                                                        <Badge bg="warning" className="me-2"><StarFill size={10} className="align-center" /> {episode.episode_rating}</Badge>
+                                                        <ChatLeftText />
+                                                        {episode.episode_watched_history ? <EyeFill /> : <EyeSlashFill />}
+                                                    </Card.Text>
+                                                </Card.Body>
+                                            </Card>
+                                        </Link>
+                                    )}
+                                </div>
+
                             </Col>
                         </Row>
                     </Container>}
