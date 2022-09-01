@@ -16,6 +16,7 @@ import Modal from "./layout/Modal"
 import AppContainer from "./layout/AppContainer"
 import Animes from "./pages/Animes";
 import Anime from "./pages/Anime";
+import Episode from "./pages/Episode";
 
 
 
@@ -34,6 +35,7 @@ function App() {
               <Route exact path="update-profile" element={<PrivateRoute><UpdateProfile /></PrivateRoute>} />
               <Route exact path="animes" element={<PrivateRoute><Animes /></PrivateRoute>} />
               <Route exact path="anime/:animeId" element={<PrivateRoute><Anime /></PrivateRoute>} />
+              <Route exact path="episode/:episodeId" element={<PrivateRoute><Episode /></PrivateRoute>} />
             </Route>
 
             <Route path="/" element={<Modal />} >
