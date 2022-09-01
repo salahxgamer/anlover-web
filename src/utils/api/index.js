@@ -1,3 +1,5 @@
+import * as Decoder from "./decoder"
+
 export default class API {
 
     static AUTH_HEADERS = {
