@@ -123,7 +123,7 @@ class Anime extends Component {
                                             <Accordion.Body>
                                                 {/* Anime content ratings */}
                                                 {anime.content_rating.map(rating =>
-                                                    <Badge className="ms-2" bg={ratingLevelColor[rating.level]}>
+                                                    <Badge key={rating.content_type} className="ms-2" bg={ratingLevelColor[rating.level]}>
                                                         {rating.content_type} : {rating.level}
                                                     </Badge>
                                                 )}
