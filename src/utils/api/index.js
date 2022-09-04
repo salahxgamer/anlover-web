@@ -129,6 +129,6 @@ export default class API {
     }
 
     static bypassCORS(url) {
-        return `/proxy/${url}`;
+        return `/api/v1/proxy/${url}`;
     }
 }
