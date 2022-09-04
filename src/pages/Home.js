@@ -1,5 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
+import {Link} from 'react-router-dom';
 import { CollectionPlayFill, Play } from 'react-bootstrap-icons';
 
 const Home = () => {
@@ -10,7 +11,7 @@ const Home = () => {
                     <h1>Welcome to AnLover</h1>
                     <h4>The free Anime Lovers space</h4>
                     <hr />
-                    <Button variant="outline-primary" size="lg" className="mt-3 px-4" href="#one"><Play size={30} /> Start</Button>
+                    <Button as={Link} variant="outline-primary" size="lg" className="mt-3 px-4" to="/animes"><Play size={30} /> Start Watching</Button>
                 </Container>
             </header>
             <section id="one">
