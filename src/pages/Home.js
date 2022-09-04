@@ -22,9 +22,9 @@ const Home = () => {
                         </Col>
                         <Col className="d-flex align-items-center justify-content-center">
                             <p>
-                                Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                                when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                                This is a free website to whatch anime with many features that are coming
+                                Just click start watching button above and create a free account to start watching,
+                                it is still in developement phase so a lot of changes are gonna happen in the feature.
                             </p>
                         </Col>
                     </Row>
