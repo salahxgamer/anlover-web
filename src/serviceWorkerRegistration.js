@@ -31,6 +31,19 @@ export function register(config) {
 
         window.addEventListener('load', () => {
             const swUrl = `${process.env.PUBLIC_URL}/service-worker.js`;
+            let isAppOnline = navigator.onLine;
+
+            window.addEventListener('online', () => {
+                if (!isAppOnline) {
+                    config.toast.success('The connectivity is back, sync in progress...');
+                    isAppOnline = true;
+                }
+            });
+
+            window.addEventListener('offline', () => {
+                config.toast.warn('The app is running offline ⛔, any changes made during this time will be synced as soon as the connectivity is back', { autoClose: false });
+                isAppOnline = false;
+            });
 
             if (isLocalhost) {
                 // This is running on localhost. Let's check if a service worker still exists or not.
@@ -72,6 +85,7 @@ function registerValidSW(swUrl, config) {
                                 'tabs for this page are closed. See https://cra.link/PWA.'
                             );
 
+                            config.toast.info('🔄 New content is available; please refresh.')
                             // Execute callback
                             if (config && config.onUpdate) {
                                 config.onUpdate(registration);
@@ -81,6 +95,7 @@ function registerValidSW(swUrl, config) {
                             // It's the perfect time to display a
                             // "Content is cached for offline use." message.
                             console.log('Content is cached for offline use.');
+                            config.toast('🚀 Content is cached for offline use.')
 
                             // Execute callback
                             if (config && config.onSuccess) {
@@ -93,6 +108,7 @@ function registerValidSW(swUrl, config) {
         })
         .catch((error) => {
             console.error('Error during service worker registration:', error);
+            config.toast('☹️ Couldn\t cache app for offline use');
         });
 }
 
