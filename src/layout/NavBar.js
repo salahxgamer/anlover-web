@@ -3,6 +3,7 @@ import { PersonCircle } from 'react-bootstrap-icons';
 import { useLocation, useNavigate, NavLink } from 'react-router-dom';
 import Brand from '../components/Brand';
 import { useAuth } from "../contexts/AuthContext"
+import AnimeSearch from '../components/AnimeSearch';
 
 
 function NavBar() {
@@ -29,6 +30,7 @@ function NavBar() {
                     </Nav>
                     {currentUser &&
                         <Nav activeKey={location.pathname}>
+                            <AnimeSearch />
                             <Nav.Link eventKey="/lists">My Lists</Nav.Link>
                             <Nav.Link eventKey="/profile"><PersonCircle size={20} /></Nav.Link>
                         </Nav>
