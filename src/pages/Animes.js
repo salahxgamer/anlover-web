@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import { toast } from 'react-toastify'
 import { Container, Col, Row, Spinner } from 'react-bootstrap'
 import AnimeCard from '../components/AnimeCard'
 import { withSearchParams } from '../utils/helper';
@@ -20,7 +20,12 @@ class Animes extends Component {
 
     componentDidMount() {
         let { _offset, _limit, _order_by, list_type, user_id, anime_name } = Object.fromEntries(this.props.searchParams.entries());
-        API.getAnimes(_offset, _limit, _order_by, list_type, user_id, anime_name)
+        toast.promise(API.getAnimes(_offset, _limit, _order_by, list_type, user_id, anime_name),
+            {
+                pending: 'Loading animes ...',
+                success: 'Animes loaded successfuly',
+                error: 'Couldn\'t load animes'
+            },{toastId: "ANIMES_LIST_LOADING"})
             .then(animes => { this.setState({ animes }) })
             .catch(console.error)
             .finally((() => { this.setState({ loading: false }) }))
