@@ -33,10 +33,10 @@ export default class API {
      * @param  {} list_type One of `"latest_episodes", "custom_list", "anime_list", "currently_airing", "latest_updated_episode", "latest_updated_episode_new", "top_anime", "top_currently_airing", "top_tv", "top_movie", "featured", "filter", "favorites", "watching", "plan_to_watch", "watched", "dropped", "on_hold", "watched_history", "schedule", "last_added_tv", "last_added_movie", "top_anime_mal", "top_currently_airing_mal", "top_tv_mal", "top_movie_mal", "anime_characters", "top_upcoming", "top_upcoming_catalog"`
      * @param  {} user_id Specify a user id if you want to get a user's list. If you don't specify a user id, it will return the current user's list.
      */
-    static getAnimes(_offset = 0, _limit = 100, _order_by = "latest_first", list_type = "top_anime", user_id = 2346241) {
-        let params = `json={"_offset":${_offset},"_limit":${_limit},"_order_by":"${_order_by}","list_type":"${list_type}","just_info":"Yes","user_id":${user_id}}`
+    static getAnimes(_offset = 0, _limit = 100, _order_by = "latest_first", list_type = "top_anime", user_id = null, anime_name = null) {
+        const params = { json: JSON.stringify({ _offset, _limit, _order_by, list_type, user_id, anime_name }) }
         if (this.options.animes_list._order_by.includes(_order_by) && this.options.animes_list.list_type.includes(list_type))
-            return fetch(`${this.BASE_URL}/animes/get-published-animes?${params}`, { method: 'GET', headers: this.AUTH_HEADERS })
+            return fetch(`${this.BASE_URL}/animes/get-published-animes?${new URLSearchParams(params)}`, { method: 'GET', headers: this.AUTH_HEADERS })
                 .then(response => response.json())
                 .then(response => response.response.data)
                 .catch((error, data) => { console.error(error, data); return [] })
