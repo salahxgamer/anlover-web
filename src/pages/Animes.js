@@ -39,7 +39,7 @@ export default class Animes extends Component {
                     <Row className="g-4 mb-5">
                         {
                             this.state.animes?.map((anime, index) => (
-                                <Col className="d-flex align-items-center" key={index}>
+                                <Col className="d-flex align-items-center justify-content-center" key={index}>
                                     <AnimeCard anime={anime} placeholder={this.state.loading} />
                                 </Col>
                             ))
