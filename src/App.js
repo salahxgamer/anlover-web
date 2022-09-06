@@ -17,6 +17,7 @@ import AppContainer from "./layout/AppContainer"
 import Animes from "./pages/Animes";
 import Anime from "./pages/Anime";
 import Episode from "./pages/Episode";
+import ToastContainer from "./components/ToastContainer";
 
 
 
@@ -48,6 +49,7 @@ function App() {
           </Routes>
         </AuthProvider>
       </Router>
+      <ToastContainer />
     </div>
   )
 }
