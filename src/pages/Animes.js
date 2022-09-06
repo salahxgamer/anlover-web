@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import { Container, Col, Row, Spinner } from 'react-bootstrap'
 import AnimeCard from '../components/AnimeCard'
 import API from '../utils/api'
+import AnimeSearch from '../components/AnimeSearch';
 
 export default class Animes extends Component {
     static propTypes = {}
@@ -34,6 +35,7 @@ export default class Animes extends Component {
                     Animes
                 </h1 >
                 <Container fluid>
+                    <AnimeSearch className="mb-4" />
                     <Row className="g-4 mb-5">
                         {
                             this.state.animes?.map((anime, index) => (
