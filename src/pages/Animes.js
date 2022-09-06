@@ -2,10 +2,11 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { Container, Col, Row, Spinner } from 'react-bootstrap'
 import AnimeCard from '../components/AnimeCard'
+import { withSearchParams } from '../utils/helper';
 import API from '../utils/api'
 import AnimeSearch from '../components/AnimeSearch';
 
-export default class Animes extends Component {
+class Animes extends Component {
     static propTypes = {}
 
     constructor(props) {
@@ -18,7 +19,8 @@ export default class Animes extends Component {
     }
 
     componentDidMount() {
-        API.getAnimes()
+        let { _offset, _limit, _order_by, list_type, user_id, anime_name } = Object.fromEntries(this.props.searchParams.entries());
+        API.getAnimes(_offset, _limit, _order_by, list_type, user_id, anime_name)
             .then(animes => { this.setState({ animes }) })
             .catch(console.error)
             .finally((() => { this.setState({ loading: false }) }))
@@ -44,9 +46,14 @@ export default class Animes extends Component {
                                 </Col>
                             ))
                         }
+                        {!this.state.animes?.length && !this.state.loading && (
+                            <h1 className="text-center">No Animes Found :(</h1>
+                        )}
                     </Row>
                 </Container>
             </Container >
         )
     }
 }
+
+export default withSearchParams(Animes)
