@@ -5,6 +5,7 @@ import AnimeCard from '../components/AnimeCard'
 import { withSearchParams } from '../utils/helper';
 import API from '../utils/api'
 import AnimeSearch from '../components/AnimeSearch';
+import ScrollToTop from '../components/ScrollToTop';
 
 class Animes extends Component {
     static propTypes = {}
@@ -36,6 +37,7 @@ class Animes extends Component {
     render() {
         return (
             <Container fluid>
+                <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {this.state.loading && <Spinner animation="grow" variant="primary" />}

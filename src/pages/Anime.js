@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player';
 import { Container, Row, Col, Spinner, Table, Badge, Accordion, Card } from 'react-bootstrap';
 import { StarFill, EyeFill, EyeSlashFill, ChatLeftText } from 'react-bootstrap-icons';
 import { Link } from 'react-router-dom';
+import ScrollToTop from '../components/ScrollToTop';
 import { withParams } from '../utils/helper';
 import API from '../utils/api';
 
@@ -48,6 +49,7 @@ class Anime extends Component {
 
         return (
             <Container fluid>
+                <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {loading && <Spinner animation="grow" variant="primary" />}

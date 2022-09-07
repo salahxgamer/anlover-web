@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { Container, Spinner, ButtonToolbar, ButtonGroup, Button, Col, Row } from 'react-bootstrap';
 import { withParams } from '../utils/helper'
 import API from '../utils/api'
+import ScrollToTop from '../components/ScrollToTop';
 import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
 
@@ -39,6 +40,7 @@ class Episode extends Component {
         const { episode, loading } = this.state
         return (
             <Container fluid>
+                <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {loading && <Spinner animation="grow" variant="primary" />}
