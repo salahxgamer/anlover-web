@@ -53,7 +53,7 @@ class Anime extends Component {
                     {loading && <Spinner animation="grow" variant="primary" />}
                     Anime
                 </h1 >
-                {!loading &&
+                {!loading && anime &&
                     <Container fluid>
                         <Row className="position-relative mb-5">
 
@@ -128,7 +128,7 @@ class Anime extends Component {
                                             <Accordion.Header><h5 className="m-0">Rating</h5></Accordion.Header>
                                             <Accordion.Body>
                                                 {/* Anime content ratings */}
-                                                {anime.content_rating.map(rating =>
+                                                {anime.content_rating?.map(rating =>
                                                     <Badge key={rating.content_type} className="ms-2" bg={ratingLevelColor[rating.level]}>
                                                         {rating.content_type} : {rating.level}
                                                     </Badge>
@@ -144,7 +144,7 @@ class Anime extends Component {
                             <h2>Trailer :</h2>
                             <Col>
                                 <div className="p-5 d-flex justify-content-center align-items-center">
-                                    <ReactPlayer className="rounded shadow overflow-hidden" url={anime.more_info_result.trailer_url} controls light pip playing />
+                                    <ReactPlayer className="rounded shadow overflow-hidden" url={anime.more_info_result?.trailer_url} controls light pip playing />
                                 </div>
                             </Col>
                         </Row>
@@ -153,7 +153,7 @@ class Anime extends Component {
                                 <h2 id="episodes">Episodes : {anime.more_info_result?.episodes || anime.episodes?.data?.length}</h2>
 
                                 <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
-                                    {anime.episodes.data.map(episode =>
+                                    {anime.episodes?.data.map(episode =>
                                         <Link key={episode.episode_number} to={`/episode/${episode.episode_id}`} className="text-decoration-none text-reset">
                                             <Card className="shadow-sm m-2" bg="light" style={{ width: "10rem" }}>
                                                 <Card.Body>
