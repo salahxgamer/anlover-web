@@ -2,6 +2,7 @@ import * as Icons from 'react-bootstrap-icons';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { useNavigate } from 'react-router-dom';
 import Brand from '../components/Brand';
+import Feedback from '../components/Feedback';
 import { useAuth } from "../contexts/AuthContext";
 
 function SideBar() {
@@ -174,6 +175,12 @@ function SideBar() {
                             </SidebarMenu.Nav.Link>
                         }
 
+                        <Feedback>
+                            <SidebarMenu.Nav.Link className="text-success" >
+                                <SidebarMenu.Nav.Icon><Icons.ChatDotsFill /></SidebarMenu.Nav.Icon>
+                                <SidebarMenu.Nav.Title>Feedback</SidebarMenu.Nav.Title>
+                            </SidebarMenu.Nav.Link>
+                        </Feedback>
 
 
                     </SidebarMenu.Nav>
