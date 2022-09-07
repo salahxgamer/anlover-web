@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import ReactPlayer from 'react-player';
 import { Container, Row, Col, Spinner, Table, Badge, Accordion, Card } from 'react-bootstrap';
 import { StarFill, EyeFill, EyeSlashFill, ChatLeftText } from 'react-bootstrap-icons';
@@ -25,7 +26,12 @@ class Anime extends Component {
     }
 
     componentDidMount() {
-        API.getAnime(this.props.params?.animeId)
+        toast.promise(API.getAnime(this.props.params?.animeId),
+            {
+                pending: 'Loading anime ...',
+                success: 'Anime loaded successfuly',
+                error: 'Couldn\'t load anime'
+            }, { toastId: "ANIME_INFO_LOADING" })
             .then(anime => { this.setState({ anime }); return anime })
             .catch(console.error)
             .finally((() => { this.setState({ loading: false }) }))

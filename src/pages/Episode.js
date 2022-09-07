@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { toast } from 'react-toastify';
 import { Container, Spinner, ButtonToolbar, ButtonGroup, Button, Col, Row } from 'react-bootstrap';
 import { withParams } from '../utils/helper'
 import API from '../utils/api'
@@ -23,14 +24,18 @@ class Episode extends Component {
     }
 
     componentDidMount() {
-        API.getEpisode(this.props.params?.episodeId)
+        toast.promise(API.getEpisode(this.props.params?.episodeId),
+            {
+                pending: 'Loading episode ...',
+                success: 'Episode loaded successfuly',
+                error: 'Couldn\'t load episode'
+            }, { toastId: "EPISODE_LOADING" })
             .then(episode => { this.setState({ episode }); return episode })
             .catch(console.error)
             .finally((() => { this.setState({ loading: false }) }))
 
     }
     render() {
-        // eslint-disable-next-line no-unused-vars
         const { episode, loading } = this.state
         return (
             <Container fluid>
