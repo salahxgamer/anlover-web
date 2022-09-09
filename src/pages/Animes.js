@@ -39,7 +39,7 @@ class Animes extends Component {
     }
 
     fetchAnimes = () => {
-        this.props.setSearchParams(this.state.filters)
+        this.props.setSearchParams(this.state.filters, { replace: true })
         this.setState({ loading: true })
         return toast.promise(API.getAnimes(this.state.filters),
             {
