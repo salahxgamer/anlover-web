@@ -32,7 +32,7 @@ export default function AnimeSearch({ onSearch, ...props }) {
                     type="search"
                     placeholder="Search"
                     className="me-2"
-                    value={searchFilters.anime_name}
+                    value={searchFilters.anime_name ?? ""}
                     onChange={setSearchFilters}
                     aria-label="Search" />
                 <Button variant="outline-success" className="d-flex align-items-center" type="submit"><Search size={20} /></Button>
