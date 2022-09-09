@@ -33,8 +33,9 @@ class Anime extends Component {
                 success: 'Anime loaded successfuly',
                 error: 'Couldn\'t load anime'
             }, { toastId: "ANIME_INFO_LOADING" })
-            .then(anime => { this.setState({ anime }); return anime })
-            .catch(console.error)
+            .then(rsp => rsp.data)
+            .then(anime => { this.setState({ anime }) })
+            .catch(err => { this.setState({ anime: null }) }) // setting anime to null to test for it later
             .finally((() => { this.setState({ loading: false }) }))
 
     }
@@ -131,8 +132,8 @@ class Anime extends Component {
                                             <Accordion.Body>
                                                 {/* Anime content ratings */}
                                                 {anime.content_rating?.map(rating =>
-                                                    <Badge key={rating.content_type} className="ms-2" bg={ratingLevelColor[rating.level]}>
-                                                        {rating.content_type} : {rating.level}
+                                                    <Badge key={rating.content_type} bg={ratingLevelColor[rating.level]} className={`ms-2 text-bg-${ratingLevelColor[rating.level]}`}>
+                                                        {rating?.content_type?.replaceAll('_', ' ')} : {rating?.level}
                                                     </Badge>
                                                 )}
                                             </Accordion.Body>
@@ -174,6 +175,9 @@ class Anime extends Component {
                             </Col>
                         </Row>
                     </Container>}
+                {!loading && !anime &&
+                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn't find this anime :(</h1></div>
+                }
             </Container >
         )
     }
