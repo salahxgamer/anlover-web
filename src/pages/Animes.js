@@ -20,15 +20,15 @@ class Animes extends Component {
     }
 
     componentDidMount() {
-        let { _offset, _limit, _order_by, list_type, user_id, anime_name } = Object.fromEntries(this.props.searchParams.entries());
-        toast.promise(API.getAnimes(_offset, _limit, _order_by, list_type, user_id, anime_name),
+        toast.promise(API.getAnimes(Object.fromEntries(this.props.searchParams.entries())),
             {
                 pending: 'Loading animes ...',
                 success: 'Animes loaded successfuly',
                 error: 'Couldn\'t load animes'
-            },{toastId: "ANIMES_LIST_LOADING"})
+            }, { toastId: "ANIMES_LIST_LOADING" })
+            .then(rsp => rsp.data)
             .then(animes => { this.setState({ animes }) })
-            .catch(console.error)
+            .catch(err => { this.setState({ animes: [] }) })
             .finally((() => { this.setState({ loading: false }) }))
 
     }
