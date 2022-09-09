@@ -17,7 +17,7 @@ function SideBar() {
             variant="dark"
             bg="dark"
             rtl={false}
-            expand="xs"
+            expand={false}
             defaultExpanded={false}
             className="h-100" >
 
