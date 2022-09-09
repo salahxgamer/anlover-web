@@ -1,9 +1,11 @@
 
 import { Form, Button, InputGroup } from 'react-bootstrap';
 import { Search } from 'react-bootstrap-icons';
+import { useNavigate, createSearchParams } from 'react-router-dom';
 import { useForm } from '../utils/hooks';
 
 export default function AnimeSearch({ onSearch, ...props }) {
+    const navigate = useNavigate();
     const [searchFilters, setSearchFilters] = useForm({
         _order_by: "best_match",
         list_type: "filter",
@@ -11,9 +13,14 @@ export default function AnimeSearch({ onSearch, ...props }) {
     });
 
     const handleSubmit = e => {
+        e.preventDefault();
         if (onSearch) {
-            e.preventDefault();
             onSearch(searchFilters)
+        } else {
+            navigate({
+                pathname: "animes",
+                search: createSearchParams(searchFilters).toString()
+            });
         }
     };
 
