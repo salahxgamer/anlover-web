@@ -5,6 +5,7 @@ import { Outlet } from 'react-router-dom';
 import Footer from './Footer';
 import NavBar from './NavBar';
 import SideBar from './SideBar';
+import ErrorBoundary from '../components/ErrorBoundary';
 
 export default function AppContainer({ showNavBar, showSideBar, showFooter, children }) {
     return (
@@ -16,8 +17,12 @@ export default function AppContainer({ showNavBar, showSideBar, showFooter, chil
                         {showSideBar && <SideBar />}
                     </Col>
                     <Col className="overflow-auto">
-                        <Outlet />
-                        {children}
+
+                        <ErrorBoundary>
+                            <Outlet />
+                            {children}
+                        </ErrorBoundary>
+
                     </Col>
                 </Row>
             </Container>
