@@ -37,14 +37,10 @@ export default class API {
     }
 
     /**
-     * @param  {} anime_id Anime id
+     * @param  {number} anime_id Anime id
      */
     static getAnime(anime_id) {
-        let params = `anime_id=${anime_id}&fetch_episodes=Yes&more_info=Yes`
-        return fetch(`${this.BASE_URL}/anime/get-anime-details?${params}`, { method: 'GET', headers: this.AUTH_HEADERS })
-            .then(response => response.json())
-            .then(response => response.response)
-            .catch((error, data) => { console.error(error, data); return {} })
+        return this.server.get(`/anime/${anime_id}`).then(rsp => rsp.data).catch(this.errorHandler);
     }
 
     /**
