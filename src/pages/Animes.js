@@ -15,12 +15,33 @@ class Animes extends Component {
         this.state = {
             // empty objects as placeholders
             animes: [{}, {}, {}, {}, {}, {}],
-            loading: true
+            loading: true,
+            filters: {
+                _offset: 0,
+                _limit: 25,
+                _order_by: "latest_first",
+                list_type: "top_anime",
+                anime_name: "",
+                // get filters from search params if present
+                ...Object.fromEntries(this.props.searchParams.entries())
+            }
         }
     }
 
     componentDidMount() {
-        toast.promise(API.getAnimes(Object.fromEntries(this.props.searchParams.entries())),
+        this.fetchAnimes();
+    }
+    componentDidUpdate(prevProps, prevState) {
+        // only fetch animes list if filters changed and it's not already loading
+        // JSON.stringify is used to do a basic shallow compare (i'm lazy)
+        if (!this.state.loading && JSON.stringify(prevState.filters) !== JSON.stringify(this.state.filters))
+            this.fetchAnimes()
+    }
+
+    fetchAnimes = () => {
+        this.props.setSearchParams(this.state.filters)
+        this.setState({ loading: true })
+        return toast.promise(API.getAnimes(this.state.filters),
             {
                 pending: 'Loading animes ...',
                 success: 'Animes loaded successfuly',
@@ -44,7 +65,7 @@ class Animes extends Component {
                     Animes
                 </h1 >
                 <Container fluid>
-                    <AnimeSearch className="mb-4" />
+                    <AnimeSearch className="mb-4" onSearch={filters => this.setState({ filters: { ...this.state.filters, ...filters } })} />
                     <Row className="g-4 mb-5">
                         {
                             this.state.animes?.map((anime, index) => (
