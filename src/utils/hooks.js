@@ -50,3 +50,39 @@ export const useSearchParam = param => {
     return value;
 };
 
+/**
+ * useForm
+ *
+ * @param {object} initialValues - The initial values of the form
+ * @returns {array<string, function>} - An array containing the values of the form and a function to update the values
+ *
+ * @example
+ * const [values, updateValues] = useForm({
+ *     foo: 'bar',
+ *     baz: 'qux'
+ * });
+ *
+ * // values will be { foo: 'bar', baz: 'qux' }
+ *
+ * updateValues({
+ *     target: {
+ *         name: 'foo',
+ *         value: 'quux'
+ *     }
+ * });
+ *
+ * // values will be { foo: 'quux', baz: 'qux' }
+ */
+export const useForm = initialValues => {
+    const [values, setValues] = React.useState(initialValues);
+
+    return [
+        values,
+        e => {
+            setValues({
+                ...values,
+                [e.target.name]: e.target.value
+            });
+        }
+    ];
+};
