@@ -11,6 +11,7 @@ export default class Provider extends Component {
         this.state = {
             url: new URL(props.url),
             loading: true,
+            name: new URL(props.url).hostname,
             urls: []
         }
     }
@@ -26,15 +27,18 @@ export default class Provider extends Component {
     render() {
         return (
             <>
+                <Dropdown.Divider />
                 <Dropdown.Header className={this.state.loading ? "text-info" : (this.state?.urls?.length ? "text-success" : "text-warning")}>
                     {this.state.loading && <Spinner animation="grow" variant="primary" size="sm" />}
-                    {`Provider : ${this.state.url.hostname}`}
+                    {`Provider : ${this.state.name}`}
                 </Dropdown.Header>
-                {!this.state.loading && this.state.urls.map((url, index) =>
-                    <Dropdown.Item key={index} eventKey={url}>
-                        Quality {index}
-                    </Dropdown.Item>
-                )}
+                {
+                    !this.state.loading && this.state.urls.map((url, index) =>
+                        <Dropdown.Item key={index} onClick={() => this.props?.onSelect(this.state, index)}>
+                            Quality {index + 1}
+                        </Dropdown.Item>
+                    )
+                }
             </>
         )
     }
@@ -42,5 +46,6 @@ export default class Provider extends Component {
 
 Provider.propTypes = {
     url: PropTypes.string.isRequired,
-    onLoad: PropTypes.func
+    onLoad: PropTypes.func,
+    onSelect: PropTypes.func
 }

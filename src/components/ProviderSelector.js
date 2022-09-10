@@ -19,13 +19,13 @@ import Provider from './Provider';
 export default function ProviderSelector({ providers, onSelect, onLoad, ...props }) {
 
     return (
-        <Dropdown onSelect={onSelect} {...props}>
-            <Dropdown.Toggle variant="success" id="dropdown-basic">
+        <Dropdown {...props}>
+            <Dropdown.Toggle variant="dark">
                 Select Provider
             </Dropdown.Toggle>
-            <Dropdown.Menu renderOnMount style={{ overflowY: "scroll", maxHeight: "18rem" }}>
+            <Dropdown.Menu renderOnMount style={{ overflowY: "auto", maxHeight: "18rem" }}>
                 {
-                    providers?.map((provider, index) => <Provider {...provider} onLoad={onLoad} key={index} />)
+                    providers?.map((provider, index) => <Provider {...provider} onLoad={onLoad} onSelect={onSelect} key={index} />)
                 }
             </Dropdown.Menu>
         </Dropdown >
