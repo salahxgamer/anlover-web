@@ -1,12 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { toast } from 'react-toastify';
-import { Container, Spinner, ButtonToolbar, ButtonGroup, Button, Col, Row } from 'react-bootstrap';
+import { Container, Spinner, Col, Row } from 'react-bootstrap';
 import { withParams } from '../utils/helper'
 import API from '../utils/api'
 import ScrollToTop from '../components/ScrollToTop';
-import { Link } from 'react-router-dom';
 import ReactPlayer from 'react-player';
+import ProviderSelector from '../components/ProviderSelector';
 
 class Episode extends Component {
     static propTypes = {
@@ -20,7 +20,9 @@ class Episode extends Component {
         this.state = {
             // empty object as placeholder
             episode: {},
-            loading: true
+            loading: true,
+            player_url: "",
+            providers: []
         }
     }
 
@@ -31,47 +33,42 @@ class Episode extends Component {
                 success: 'Episode loaded successfuly',
                 error: 'Couldn\'t load episode'
             }, { toastId: "EPISODE_LOADING" })
-            .then(episode => { this.setState({ episode }); return episode })
-            .catch(console.error)
+            .then(rsp => rsp.data)
+            .then(episode => { this.setState({ episode, providers: episode.providers }); return episode })
+            .catch(err => { this.setState({ episode: null }); console.error(err) })
             .finally((() => { this.setState({ loading: false }) }))
 
     }
     render() {
-        const { episode, loading } = this.state
+        const { episode, providers, player_url, loading } = this.state
         return (
             <Container fluid>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {loading && <Spinner animation="grow" variant="primary" />}
-                    Episode : {episode.episode_name}
+                    Episode : {episode?.name}
                 </h1 >
                 {!loading && episode &&
                     <Container fluid>
                         <Row>
 
-                            <Col lg={2}>
-                                <ButtonToolbar className="flex-column" aria-label="Toolbar with button groups">
-                                    {episode.episode_sources?.map(provider =>
-                                        <ButtonGroup vertical className="my-2" aria-label="" key={provider.id}>
-                                            <h6 className={!provider.provider_urls.length && "text-danger"}>{provider.provider_name}</h6>
-                                            {provider.provider_urls?.map((url, index) =>
-                                                <Button key={index} bg="success" onClick={() => this.setState({ player_url: url })}>
-                                                    {!this.state.player_url && this.setState({ player_url: url })}
-                                                    Quality {index + 1}
-                                                </Button>
-                                            )}
-                                        </ButtonGroup>
-                                    )}
-                                </ButtonToolbar>
-                            </Col>
+                            <Col className="d-flex flex-column align-items-center justify-content-center mb-2">
+                                <ProviderSelector
+                                    providers={providers}
+                                    onLoad={({ urls }) => player_url || this.setState({ player_url: urls.at(-1) })}
+                                    onSelect={url => this.setState({ player_url: url })}
+                                    className="mb-2"
+                                />
 
-                            <Col className="d-flex align-items-center justify-content-center mb-2">
-                                <ReactPlayer url={this.state.player_url} controls={true} className="shadow rounded" playing />
+                                <ReactPlayer url={player_url} controls={true} className="shadow rounded" playing />
                             </Col>
 
                         </Row>
                     </Container>}
+                {!loading && !episode &&
+                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn't find this episode :(</h1></div>
+                }
             </Container>
         )
     }
