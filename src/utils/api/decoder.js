@@ -1,46 +1,28 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable no-unused-vars */
-export var Decoder = {
-    'decode': function (url, content) {
-        var server = getServer(url, content);
-        return server;
-    }, 'isEnabled': function () {
-        return !![];
-    }
+export var decode = (url, content) => {
+    var server = getServer(url, content);
+    return server;
 };
 
-export var DeServers = {
-    /**
-     * @return {string}
-     */
-    'deServers': function () {
-
-        // rq=0 get rq=1 post rq=3 webview
-
-        var servers = [];
-        var jawcloud_header = { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0' };
-        servers.push({ 'name': "mp4upload", 'shorten': "MD", 'v': 15, 'optional': true });
-        servers.push({ 'name': "vidlox", 'shorten': "VL", 'v': 15, 'optional': true });
-        servers.push({ 'name': "vidoza", 'shorten': "VA", 'v': 15, 'optional': true });
-        servers.push({ 'name': "onlystream", 'shorten': "OS", 'v': 15, 'optional': true });
-        servers.push({ 'name': "vk.com", 'shorten': "RK", 'v': 15, 'optional': true });
-        servers.push({ 'name': "cloudvideo", 'shorten': "CV", 'hls': 1, 'v': 18, 'optional': true });
-        servers.push({ 'name': "fembed", 'shorten': "FD", 'rq': 1, 'v': 18, 'optional': true });
-        servers.push({ 'name': "mixdrop", 'shorten': "MP", 'v': 18, 'optional': true });
-        servers.push({ 'name': "jawcloud", 'shorten': "JC", 'hls': 1, 'headers': jawcloud_header, 'v': 18, 'optional': true });
-        servers.push({ 'name': "clipwatching", 'shorten': "CL", 'v': 18, 'optional': true });
-        servers.push({ 'name': "mediafire", 'shorten': "MF", 'v': 19, 'optional': true });
-        servers.push({ 'name': "fastplay", 'shorten': "FP", 'hls': 1, 'v': 19, 'optional': true });
-        servers.push({ 'name': "mystream", 'shorten': "MS", 'rq': 2, 'v': 28, 'optional': true });
-
-        //  servers.push({'name': "vidfast", 'shorten': "VF", 'hls': 1, 'v': 18});
-        //  servers.push({'name': "vidsat", 'shorten': "VS", 'hls': 1, 'v': 18});
-
-
-
-        return JSON.stringify(servers);
-    }
-};
+export var DeServers = [
+    // rq=0 get rq=1 post rq=3 webview
+    { 'name': "mp4upload", 'shorten': "MD", 'v': 15, 'optional': true },
+    { 'name': "vidlox", 'shorten': "VL", 'v': 15, 'optional': true },
+    { 'name': "vidoza", 'shorten': "VA", 'v': 15, 'optional': true },
+    { 'name': "onlystream", 'shorten': "OS", 'v': 15, 'optional': true },
+    { 'name': "vk.com", 'shorten': "RK", 'v': 15, 'optional': true },
+    { 'name': "cloudvideo", 'shorten': "CV", 'hls': 1, 'v': 18, 'optional': true },
+    { 'name': "fembed", 'shorten': "FD", 'rq': 1, 'v': 18, 'optional': true },
+    { 'name': "mixdrop", 'shorten': "MP", 'v': 18, 'optional': true },
+    { 'name': "jawcloud", 'shorten': "JC", 'hls': 1, 'headers': { 'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:47.0) Gecko/20100101 Firefox/47.0' }, 'v': 18, 'optional': true },
+    { 'name': "clipwatching", 'shorten': "CL", 'v': 18, 'optional': true },
+    { 'name': "mediafire", 'shorten': "MF", 'v': 19, 'optional': true },
+    { 'name': "fastplay", 'shorten': "FP", 'hls': 1, 'v': 19, 'optional': true },
+    { 'name': "mystream", 'shorten': "MS", 'rq': 2, 'v': 28, 'optional': true },
+    //  {'name': "vidfast", 'shorten': "VF", 'hls': 1, 'v': 18},
+    //  {'name': "vidsat", 'shorten': "VS", 'hls': 1, 'v': 18},
+];
 
 export function getServer(url, content) {
     if (url.includes("ok.ru")) {
