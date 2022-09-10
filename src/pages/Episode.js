@@ -5,8 +5,7 @@ import { Container, Spinner, Col, Row } from 'react-bootstrap';
 import { withParams } from '../utils/helper'
 import API from '../utils/api'
 import ScrollToTop from '../components/ScrollToTop';
-import ReactPlayer from 'react-player';
-import ProviderSelector from '../components/ProviderSelector';
+import EpisodePlayer from '../components/EpisodePlayer';
 
 class Episode extends Component {
     static propTypes = {
@@ -40,28 +39,21 @@ class Episode extends Component {
 
     }
     render() {
-        const { episode, providers, player_url, loading } = this.state
+        const { episode, providers, loading } = this.state
         return (
             <Container fluid>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {loading && <Spinner animation="grow" variant="primary" />}
-                    Episode : {episode?.name}
+                    Episode : {episode?.episode_name}
                 </h1 >
                 {!loading && episode &&
                     <Container fluid>
                         <Row>
 
-                            <Col className="d-flex flex-column align-items-center justify-content-center mb-2">
-                                <ProviderSelector
-                                    providers={providers}
-                                    onLoad={({ urls }) => player_url || this.setState({ player_url: urls.at(-1) })}
-                                    onSelect={url => this.setState({ player_url: url })}
-                                    className="mb-2"
-                                />
-
-                                <ReactPlayer url={player_url} controls={true} className="shadow rounded" playing />
+                            <Col className="d-flex flex-column align-items-center justify-content-center mb-4">
+                                <EpisodePlayer providers={providers} />
                             </Col>
 
                         </Row>
