@@ -1,8 +1,5 @@
-import { useEffect } from 'react';
 import { Dropdown } from 'react-bootstrap';
-import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
-import API from '../utils/api';
 import Provider from './Provider';
 
 /**
