@@ -52,13 +52,13 @@ export default class API {
 
     static fetchProvider = async (url) => {
         const method = Decoder?.DeServers?.find(prov => url.includes(prov?.name))?.rq === 1 ? "POST" : "GET"
-        return this.server({ url: `proxy/${url}`, method, transformResponse: (r) => r }) //null transform (we do not want to parse as JSON);
+        return this.server({ url: this.bypassCORS(url), method, transformResponse: (r) => r }) //null transform (we do not want to parse as JSON);
             .then(rsp => rsp.data)
             .then(content => Decoder?.decode(url, content))
             .catch(this.errorHandler)
     }
 
     static bypassCORS(url) {
-        return `/api/v1/proxy/${url}`;
+        return `/proxy/${url}`;
     }
 }
