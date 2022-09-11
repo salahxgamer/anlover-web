@@ -27,7 +27,7 @@ export default class EpisodePlayer extends Component {
                 <div>
                     <ProviderSelector
                         providers={providers}
-                        onLoad={(provider) => selectedProvider || this.setState({ selectedProvider: provider })}
+                        onLoad={(provider) => provider.urls.length && (selectedProvider || this.setState({ selectedProvider: provider }))}
                         onSelect={(selectedProvider, urlIndex) => this.setState({ selectedProvider, urlIndex })}
                         className="" />
                 </div>
