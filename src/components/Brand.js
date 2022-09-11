@@ -6,7 +6,7 @@ export default function Brand() {
         <span>
             <img src={anlover_logo} alt="AnLover" width="20" height="20" className="mx-1" style={{ verticalAlign: "-2px" }} />
             Anlover
-            <small className="mx-1 fs-6 text-muted"><em>v0.1.0</em></small>
+            <small className="mx-1 fs-6 text-muted"><em>v0.2.0</em></small>
         </span>
     )
 }
