@@ -3,12 +3,6 @@ import axios from "axios"
 
 export default class API {
 
-    static AUTH_HEADERS = {
-        'client-id': process.env.REACT_APP_API_CLIENT_ID,
-        'client-secret': process.env.REACT_APP_API_CLIENT_SECRET,
-        'Authorization': `Bearer ${process.env.REACT_APP_API_AUTHORIZATION}`,
-    };
-    static BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
     static server = axios.create({ baseURL: "/api/v1" });
 
