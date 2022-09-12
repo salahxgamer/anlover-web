@@ -156,7 +156,7 @@ class Anime extends Component {
                                 <h2 id="episodes">Episodes : {anime.more_info_result?.episodes || anime.episodes?.data?.length}</h2>
 
                                 <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
-                                    {anime.episodes?.data.map(episode =>
+                                    {anime.episodes?.data?.map(episode =>
                                         <Link key={episode.episode_number} to={`/episode/${episode.episode_id}`} className="text-decoration-none text-reset">
                                             <Card className="shadow-sm m-2" bg="light" style={{ width: "10rem" }}>
                                                 <Card.Body>
