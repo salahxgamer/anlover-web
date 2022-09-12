@@ -14,7 +14,7 @@ class Animes extends Component {
         super(props)
         this.state = {
             // empty objects as placeholders
-            animes: [{}, {}, {}, {}, {}, {}],
+            animes: new Array(12).fill({}),
             loading: true,
             filters: {
                 _offset: 0,
