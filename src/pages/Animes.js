@@ -18,7 +18,7 @@ class Animes extends Component {
             loading: true,
             filters: {
                 _offset: 0,
-                _limit: 25,
+                _limit: 100,
                 _order_by: "latest_first",
                 list_type: "top_anime",
                 anime_name: "",
