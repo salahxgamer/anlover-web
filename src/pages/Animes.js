@@ -46,7 +46,7 @@ class Animes extends Component {
                 pending: 'Loading animes ...',
                 success: 'Animes loaded successfuly',
                 error: 'Couldn\'t load animes'
-            }, { toastId: "ANIMES_LIST_LOADING" })
+            }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(animes => { this.setState({ animes }) })
             .catch(err => { this.setState({ animes: [] }) })

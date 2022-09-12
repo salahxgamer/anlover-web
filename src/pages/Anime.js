@@ -32,7 +32,7 @@ class Anime extends Component {
                 pending: 'Loading anime ...',
                 success: 'Anime loaded successfuly',
                 error: 'Couldn\'t load anime'
-            }, { toastId: "ANIME_INFO_LOADING" })
+            }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(anime => { this.setState({ anime }) })
             .catch(err => { this.setState({ anime: null }) }) // setting anime to null to test for it later

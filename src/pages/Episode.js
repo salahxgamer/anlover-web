@@ -31,7 +31,7 @@ class Episode extends Component {
                 pending: 'Loading episode ...',
                 success: 'Episode loaded successfuly',
                 error: 'Couldn\'t load episode'
-            }, { toastId: "EPISODE_LOADING" })
+            }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(episode => { this.setState({ episode, providers: episode.providers }); return episode })
             .catch(err => { this.setState({ episode: null }); console.error(err) })
