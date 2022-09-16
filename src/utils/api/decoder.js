@@ -25,6 +25,9 @@ export var DeServers = [
 ];
 
 export function getServer(url, content) {
+    if (url.includes("facebook.com")) {
+        return facebook(url, content);
+    }
     if (url.includes("ok.ru")) {
         return okru(url, content);
     }
@@ -75,6 +78,27 @@ export function getServer(url, content) {
      }*/
 }
 
+
+export function facebook(url, content) {
+    var urls = []
+
+    var myRegEx = /(hd|sd)_src:"([^"]*)"/g;
+    var matches = getMatches(content, myRegEx, 2);
+    var labels = getMatches(content, myRegEx, 1); // either "hd" or "sd"
+
+    urls = matches.map(url => htmlDecode(url))
+    console.log("facebook urls:", matches)
+
+    var lo = getLocation(url);
+    return {
+
+        "url": url,
+        "host": lo.hostname,
+        "urls": urls,
+        "labels": labels
+
+    }
+}
 
 export function Solidfiles(url, content) {
     var urls = [];
@@ -272,7 +296,6 @@ export function okru(url, content) {
     json = JSON.parse(json).flashvars.metadata;
     json = JSON.parse(json).videos;
     urls = json.map((urlObject) => urlObject.url)
-    console.log(urls)
 
     var lo = getLocation(url);
     return {
