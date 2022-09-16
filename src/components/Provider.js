@@ -18,7 +18,7 @@ export default class Provider extends Component {
 
     componentDidMount() {
         API.fetchProvider(this.state.url.toString())
-            .then(({ urls }) => this.setState({ urls }, () => this.props?.onLoad(this.state)))
+            .then(({ urls, labels }) => this.setState({ urls, labels }, () => this.props?.onLoad(this.state)))
             .then(() => console.log("Provider resolved :", this.state.url))
             .catch((err) => console.warn("Provider rejected :", this.state.url, err))
             .finally(() => this.setState({ loading: false }))
@@ -33,9 +33,9 @@ export default class Provider extends Component {
                     {`Provider : ${this.state.name}`}
                 </Dropdown.Header>
                 {
-                    !this.state.loading && this.state.urls.map((url, index) =>
+                    !this.state.loading && this.state?.urls?.map((url, index) =>
                         <Dropdown.Item key={index} onClick={() => this.props?.onSelect(this.state, index)}>
-                            Quality {index + 1}
+                            {this.state?.labels?.at(index) ?? `Quality ${index + 1}`}
                         </Dropdown.Item>
                     )
                 }
