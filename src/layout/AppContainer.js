@@ -16,7 +16,7 @@ export default function AppContainer({ showNavBar, showSideBar, showFooter, chil
                     <Col xs="auto">
                         {showSideBar && <SideBar />}
                     </Col>
-                    <Col className="overflow-auto">
+                    <Col style={{ overflowX: 'clip' }}>
 
                         <ErrorBoundary>
                             <Outlet />
