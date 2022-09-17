@@ -1,13 +1,12 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { toast } from 'react-toastify';
+import { Accordion, Badge, Col, Container, Row, Spinner, Table } from 'react-bootstrap';
 import ReactPlayer from 'react-player';
-import { Container, Row, Col, Spinner, Table, Badge, Accordion, Card } from 'react-bootstrap';
-import { StarFill, EyeFill, EyeSlashFill, ChatLeftText } from 'react-bootstrap-icons';
-import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import EpisodeSelector from '../components/EpisodeSelector';
 import ScrollToTop from '../components/ScrollToTop';
-import { withParams } from '../utils/helper';
 import API from '../utils/api';
+import { withParams } from '../utils/helper';
 
 
 class Anime extends Component {
@@ -155,7 +154,10 @@ class Anime extends Component {
                             <Col>
                                 <h2 id="episodes">Episodes : {anime.more_info_result?.episodes || anime.episodes?.data?.length}</h2>
 
-                                <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
+                                <EpisodeSelector episodes={anime?.episodes?.data} />
+
+
+                                {/* <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
                                     {anime.episodes?.data?.map(episode =>
                                         <Link key={episode.episode_number} to={`/episode/${episode.episode_id}`} className="text-decoration-none text-reset">
                                             <Card className="shadow-sm m-2" bg="light" style={{ width: "10rem" }}>
@@ -170,7 +172,7 @@ class Anime extends Component {
                                             </Card>
                                         </Link>
                                     )}
-                                </div>
+                                </div> */}
 
                             </Col>
                         </Row>
