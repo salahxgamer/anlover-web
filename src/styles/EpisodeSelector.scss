@@ -1,0 +1,16 @@
+.episode-option {
+    transition: background 60ms;
+
+    &:hover {
+        transition-delay: 60ms;
+        background: #deebff;
+    }
+
+    .custom-select__option--is-focused {
+        background: none;
+    }
+
+    .custom-select__option--is-selected {
+        background: #2684FF;
+    }
+}
