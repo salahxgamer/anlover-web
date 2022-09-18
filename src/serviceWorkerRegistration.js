@@ -35,13 +35,13 @@ export function register(config) {
 
             window.addEventListener('online', () => {
                 if (!isAppOnline) {
-                    config.toast.success('The connectivity is back, sync in progress...');
+                    config.toast.success('The connectivity is back, sync in progress...', { toastId: 'CONNECTIVITY_ONLINE' });
                     isAppOnline = true;
                 }
             });
 
             window.addEventListener('offline', () => {
-                config.toast.warn('The app is running offline ⛔, any changes made during this time will be synced as soon as the connectivity is back', { autoClose: false });
+                config.toast.warn('The app is running offline ⛔, waiting for connectivity...', { toastId: 'CONNECTIVITY_OFFLINE' });
                 isAppOnline = false;
             });
 
@@ -108,7 +108,7 @@ function registerValidSW(swUrl, config) {
         })
         .catch((error) => {
             console.error('Error during service worker registration:', error);
-            config.toast('☹️ Couldn\t cache app for offline use');
+            config.toast('☹️ Couldn\'t cache app for offline use');
         });
 }
 
