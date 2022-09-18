@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { toast } from 'react-toastify'
+import { Helmet } from 'react-helmet'
 import { Container, Col, Row, Spinner } from 'react-bootstrap'
 import AnimeCard from '../components/AnimeCard'
 import { withSearchParams } from '../utils/helper';
@@ -58,6 +59,7 @@ class Animes extends Component {
     render() {
         return (
             <Container fluid>
+                <Helmet><title>{this.state.filters.anime_name ? `Search for "${this.state.filters.anime_name}"` : "Animes List"}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}

@@ -1,5 +1,6 @@
 import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
+import { Helmet } from "react-helmet"
 
 import "./styles/App.scss";
 
@@ -24,6 +25,7 @@ import ToastContainer from "./components/ToastContainer";
 function App() {
   return (
     <div className="w-100">
+      <Helmet defaultTitle="Anime Lover Website - Watch Free Online Anime" titleTemplate="%s - AnLover" />
       <Router>
         <AuthProvider>
           <Routes>

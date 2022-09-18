@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet'
 import { Accordion, Badge, Col, Container, Row, Spinner, Table } from 'react-bootstrap';
 import ReactPlayer from 'react-player';
 import { toast } from 'react-toastify';
@@ -49,6 +50,7 @@ class Anime extends Component {
 
         return (
             <Container fluid>
+                <Helmet><title>{`Anime : ${anime.anime_name}`}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}

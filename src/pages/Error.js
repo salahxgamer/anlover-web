@@ -1,4 +1,5 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
 import { Link } from 'react-router-dom'
 
 /**
@@ -12,6 +13,7 @@ export default function Error({ statusCode, message }) {
             style={{ minHeight: "100vh" }}
             className="d-flex justify-content-center align-items-center container"
         >
+            <Helmet><title>{`Error ${statusCode} - ${message}`}</title></Helmet>
             <h1 className="pe-3" id="code">
                 {statusCode || "Error"}
             </h1>

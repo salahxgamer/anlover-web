@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet'
 import { toast } from 'react-toastify';
 import { Container, Spinner, Col, Row } from 'react-bootstrap';
 import { withParams } from '../utils/helper'
@@ -42,6 +43,7 @@ class Episode extends Component {
         const { episode, providers, loading } = this.state
         return (
             <Container fluid>
+                <Helmet><title>{`Episode : ${episode.episode_name}`}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
