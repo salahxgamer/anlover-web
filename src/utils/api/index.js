@@ -44,18 +44,29 @@ export default class API {
         return this.server.get(`/episode/${episode_id}`).then(rsp => rsp.data).catch(this.errorHandler);
     }
 
-    static fetchProvider = async (url) => {
+    static fetchProvider = async (url, proxy = true) => {
         // temporary ok.ru provider url fix
         if (url.includes('ok.ru')) url = url.replace("/video/", "/videoembed/").replace("m.", "")
-
+        
+        const headers = { 'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" }
+        const blacklistHeaders = ["sec-ch.*"]
+        
         const method = Decoder?.DeServers?.find(prov => url.includes(prov?.name))?.rq === 1 ? "POST" : "GET"
-        return this.server({ url: this.bypassCORS(url), method, transformResponse: (r) => r }) //null transform (we do not want to parse as JSON);
+
+        return this.server
+            ({
+                url: proxy ? "/proxy" : url,
+                method,
+                params: proxy && {
+                    url,
+                    headers,
+                    blacklistHeaders
+                },
+                //null transform (we do not want to parse as JSON);
+                transformResponse: (r) => r
+            })
             .then(rsp => rsp.data)
             .then(content => Decoder?.decode(url, content))
             .catch(this.errorHandler)
-    }
-
-    static bypassCORS(url) {
-        return `/proxy/${url}`;
     }
 }
