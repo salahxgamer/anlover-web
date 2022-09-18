@@ -1,18 +1,24 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
+/**
+ * Render the error page
+ * @param {number} statusCode - The HTTP status code
+ * @param {string} message - The error message
+ */
 export default function Error({ statusCode, message }) {
     return (
         <div
             style={{ minHeight: "100vh" }}
-            className="d-flex justify-content-center align-items-center container" id="code"
+            className="d-flex justify-content-center align-items-center container"
         >
-            <h1 className="me-3 pe-3 align-top border-end d-inline-block align-content-center">
+            <h1 className="pe-3" id="code">
                 {statusCode || "Error"}
             </h1>
-            <div className="d-inline-block align-middle">
+            <div className="ps-3 border-start">
                 <h2 className="font-weight-normal lead" id="message">{message || "Oops... An error occured"}</h2>
+                <Link to="/" className="btn btn-link btn-sm ps-0">Go back to home page</Link>
             </div>
         </div>
     )
 }
-
