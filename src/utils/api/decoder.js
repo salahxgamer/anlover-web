@@ -87,7 +87,6 @@ export function facebook(url, content) {
     var labels = getMatches(content, myRegEx, 1); // either "hd" or "sd"
 
     urls = matches.map(url => htmlDecode(url))
-    console.log("facebook urls:", matches)
 
     var lo = getLocation(url);
     return {
