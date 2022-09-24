@@ -1,8 +1,7 @@
 module.exports = {
     list_type: [
         "anime_list", "currently_airing", "featured", "filter", "last_added_movie",
-        "last_added_tv", "latest_episodes", "latest_updated_episode",
-        "latest_updated_episode_new", "top_anime", "top_anime_mal",
+        "last_added_tv", "latest_episodes", "latest_updated_episode", "top_anime", "top_anime_mal",
         "top_currently_airing", "top_currently_airing_mal", "top_movie",
         "top_movie_mal", "top_tv", "top_tv_mal", "top_upcoming", "top_upcoming_catalog"
     ],
