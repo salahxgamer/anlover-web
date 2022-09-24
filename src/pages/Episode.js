@@ -61,7 +61,7 @@ class Episode extends Component {
                         </Row>
                     </Container>}
                 {!loading && !episode &&
-                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn't find this episode :(</h1></div>
+                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn&apos;t find this episode :(</h1></div>
                 }
             </Container>
         )

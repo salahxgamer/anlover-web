@@ -35,7 +35,7 @@ class Anime extends Component {
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(anime => { this.setState({ anime }) })
-            .catch(err => { this.setState({ anime: null }) }) // setting anime to null to test for it later
+            .catch(() => { this.setState({ anime: null }) }) // setting anime to null to test for it later
             .finally((() => { this.setState({ loading: false }) }))
 
     }
@@ -180,7 +180,7 @@ class Anime extends Component {
                         </Row>
                     </Container>}
                 {!loading && !anime &&
-                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn't find this anime :(</h1></div>
+                    <div className="h-100 d-flex align-items-center justify-content-center"><h1>Ops, couldn&apos;t find this anime :(</h1></div>
                 }
             </Container >
         )

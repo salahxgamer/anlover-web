@@ -47,24 +47,23 @@ export default class API {
     static fetchProvider = async (url, proxy = true) => {
         // temporary ok.ru provider url fix
         if (url.includes('ok.ru')) url = url.replace("/video/", "/videoembed/").replace("m.", "")
-        
+
         const headers = { 'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" }
         const blacklistHeaders = ["sec-ch.*"]
-        
+
         const method = Decoder?.DeServers?.find(prov => url.includes(prov?.name))?.rq === 1 ? "POST" : "GET"
 
-        return this.server
-            ({
-                url: proxy ? "/proxy" : url,
-                method,
-                params: proxy && {
-                    url,
-                    headers,
-                    blacklistHeaders
-                },
-                //null transform (we do not want to parse as JSON);
-                transformResponse: (r) => r
-            })
+        return this.server({
+            url: proxy ? "/proxy" : url,
+            method,
+            params: proxy && {
+                url,
+                headers,
+                blacklistHeaders
+            },
+            //null transform (we do not want to parse as JSON);
+            transformResponse: (r) => r
+        })
             .then(rsp => rsp.data)
             .then(content => Decoder?.decode(url, content))
             .catch(this.errorHandler)
