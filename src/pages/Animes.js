@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
-import { toast } from 'react-toastify'
+import { Col, Container, Row, Spinner } from 'react-bootstrap'
 import { Helmet } from 'react-helmet'
-import { Container, Col, Row, Spinner } from 'react-bootstrap'
+import { toast } from 'react-toastify'
 import AnimeCard from '../components/AnimeCard'
-import { withSearchParams } from '../utils/helper';
+import AnimeSearch from '../components/AnimeSearch'
+import ScrollToTop from '../components/ScrollToTop'
 import API from '../utils/api'
-import AnimeSearch from '../components/AnimeSearch';
-import ScrollToTop from '../components/ScrollToTop';
+import { withSearchParams } from '../utils/helper'
 
 class Animes extends Component {
     static propTypes = {}
@@ -17,12 +17,11 @@ class Animes extends Component {
             // empty objects as placeholders
             animes: new Array(12).fill({}),
             loading: true,
-            filters: {
+            initialFilters: {
                 _offset: 0,
                 _limit: 100,
                 _order_by: "latest_first",
                 list_type: "top_anime",
-                anime_name: "",
                 // get filters from search params if present
                 ...Object.fromEntries(this.props.searchParams.entries())
             }
@@ -30,19 +29,15 @@ class Animes extends Component {
     }
 
     componentDidMount() {
+        // fetch animes with initial filters
         this.fetchAnimes();
     }
-    componentDidUpdate(prevProps, prevState) {
-        // only fetch animes list if filters changed and it's not already loading
-        // JSON.stringify is used to do a basic shallow compare (i'm lazy)
-        if (!this.state.loading && JSON.stringify(prevState.filters) !== JSON.stringify(this.state.filters))
-            this.fetchAnimes()
-    }
 
-    fetchAnimes = () => {
-        this.props.setSearchParams(this.state.filters, { replace: true })
+    fetchAnimes = (filters = this.state.initialFilters) => {
+        // set search params to url
+        this.props.setSearchParams(filters, { replace: true })
         this.setState({ loading: true })
-        return toast.promise(API.getAnimes(this.state.filters),
+        return toast.promise(API.getAnimes(filters),
             {
                 pending: 'Loading animes ...',
                 success: 'Animes loaded successfuly',
@@ -50,7 +45,7 @@ class Animes extends Component {
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(animes => { this.setState({ animes }) })
-            .catch(err => { this.setState({ animes: [] }) })
+            .catch(() => { this.setState({ animes: [] }) })
             .finally((() => { this.setState({ loading: false }) }))
 
     }
@@ -59,7 +54,7 @@ class Animes extends Component {
     render() {
         return (
             <Container fluid>
-                <Helmet><title>{this.state.filters.anime_name ? `Search for "${this.state.filters.anime_name}"` : "Animes List"}</title></Helmet>
+                <Helmet><title>{this.props.searchParams.get("anime_name") ? `Search for "${this.props.searchParams.get("anime_name")}"` : "Animes List"}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
@@ -67,7 +62,12 @@ class Animes extends Component {
                     Animes
                 </h1 >
                 <Container fluid>
-                    <AnimeSearch className="mb-4" onSearch={filters => this.setState({ filters: { ...this.state.filters, ...filters } })} />
+                    <AnimeSearch
+                        className="mb-4"
+                        initialFilters={this.state.initialFilters}
+                        onSearch={this.fetchAnimes}
+                        isAutoSearch={true}
+                    />
                     <Row className="g-4 mb-5">
                         {
                             this.state.animes?.map((anime, index) => (
