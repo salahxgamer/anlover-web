@@ -72,7 +72,7 @@ export default function AnimeSearch(props) {
                 isMulti={false}
                 menuShouldScrollIntoView={false}
                 isClearable
-                isSearchable
+                isSearchable={false}
                 placeholder={`${snakeToTitleCase(name)}...`}
                 options={searchOptions[name]?.map(toOption)}
                 onChange={handleChange}
@@ -130,8 +130,7 @@ export default function AnimeSearch(props) {
                     <TemplateFilter
                         name="_limit"
                         getOptionLabel={({ label }) => `${label} per page`}
-                        isClearable={false}
-                        isSearchable={false} />
+                        isClearable={false} />
                 </Col>
             </Row>
 
@@ -143,8 +142,11 @@ export default function AnimeSearch(props) {
                     <div className="vstack gap-2">
                         <TemplateFilter name="list_type" />
                         <TemplateFilter name="_order_by" />
-                        <TemplateFilter name="_limit" />
-                        <Form.Check label="Toggle search as you type" type="switch" checked={autoSearch} onClick={toggleAutoSearch} />
+                        <TemplateFilter
+                            name="_limit"
+                            getOptionLabel={({ label }) => `${label} per page`}
+                            isClearable={false} />
+                        <Form.Check label="Toggle search as you type" type="switch" checked={autoSearch} onChange={toggleAutoSearch} />
                     </div>
                 </Modal.Body>
                 <Modal.Footer>
