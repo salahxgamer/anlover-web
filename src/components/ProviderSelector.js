@@ -24,7 +24,7 @@ export default function ProviderSelector(props) {
             isClearable={false}
             isMulti={false}
             menuShouldScrollIntoView={false}
-            isSearchable
+            isSearchable={false}
 
             aria-autocomplete="both"
             placeholder="Select a provider..."
