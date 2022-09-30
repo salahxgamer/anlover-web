@@ -55,7 +55,7 @@ class Episode extends Component {
                         <Row>
 
                             <Col className="d-flex flex-column align-items-center justify-content-center mb-4">
-                                <EpisodePlayer providers={providers} />
+                                <EpisodePlayer providers={providers} episode={episode} />
                             </Col>
 
                         </Row>
