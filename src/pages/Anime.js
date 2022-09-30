@@ -158,24 +158,6 @@ class Anime extends Component {
 
                                 <EpisodeSelector episodes={anime?.episodes?.data} />
 
-
-                                {/* <div className="p-2 d-flex justify-content-center align-items-center flex-wrap">
-                                    {anime.episodes?.data?.map(episode =>
-                                        <Link key={episode.episode_number} to={`/episode/${episode.episode_id}`} className="text-decoration-none text-reset">
-                                            <Card className="shadow-sm m-2" bg="light" style={{ width: "10rem" }}>
-                                                <Card.Body>
-                                                    <Card.Title className="h6 text-truncate" title={episode.episode_name}>{episode.episode_name}</Card.Title>
-                                                    <Card.Text className="d-flex justify-content-between align-items-center">
-                                                        <Badge bg="warning" className="me-2"><StarFill size={10} className="align-center" /> {episode.episode_rating}</Badge>
-                                                        <ChatLeftText />
-                                                        {episode.episode_watched_history ? <EyeFill /> : <EyeSlashFill />}
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Link>
-                                    )}
-                                </div> */}
-
                             </Col>
                         </Row>
                     </Container>}
