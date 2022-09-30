@@ -1,24 +1,24 @@
-import React from "react"
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
-import { Helmet } from "react-helmet"
+import React from "react";
+import { Helmet } from "react-helmet";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import PrivateRoute from "./components/PrivateRoute";
+import ToastContainer from "./components/ToastContainer";
+import { AuthProvider } from "./contexts/AuthContext";
+import AppContainer from "./layout/AppContainer";
+import Modal from "./layout/Modal";
+import Anime from "./pages/Anime";
+import Animes from "./pages/Animes";
+import Episode from "./pages/Episode";
+import Error from "./pages/Error";
+import ForgotPassword from "./pages/ForgotPassword";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Profile from "./pages/Profile";
+import Signup from "./pages/Signup";
+import UpdateProfile from "./pages/UpdateProfile";
 
 import "./styles/App.scss";
-
-import { AuthProvider } from "./contexts/AuthContext"
-import Signup from "./pages/Signup"
-import Profile from "./pages/Profile"
-import Login from "./pages/Login"
-import ForgotPassword from "./pages/ForgotPassword"
-import UpdateProfile from "./pages/UpdateProfile"
-import Error from "./pages/Error"
-import Home from "./pages/Home";
-import PrivateRoute from "./components/PrivateRoute"
-import Modal from "./layout/Modal"
-import AppContainer from "./layout/AppContainer"
-import Animes from "./pages/Animes";
-import Anime from "./pages/Anime";
-import Episode from "./pages/Episode";
-import ToastContainer from "./components/ToastContainer";
 
 
 
