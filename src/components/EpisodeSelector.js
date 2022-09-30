@@ -1,9 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Badge } from 'react-bootstrap';
-import { ChatLeftText, EyeFill, EyeSlashFill, StarFill } from 'react-bootstrap-icons';
+import { Badge, Button } from 'react-bootstrap';
+import { ChatLeftText, StarFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import Select, { components, createFilter } from 'react-select';
+import EpisodeWatchStatus from './EpisodeWatchStatus';
 
 import "../styles/EpisodeSelector.scss";
 
@@ -63,16 +64,16 @@ const EpisodeOption = ({ children, ...props }) => {
     const newProps = { ...props, innerProps: rest };
     const episode = props.data
     return (
-        <components.Option className="episode-option" {...newProps}>
-            <div className='hstack gap-3'>
+        <div className='hstack gap-3'>
+            <components.Option className="episode-option" {...newProps}>
                 <div className='me-auto'>
                     {children}
                 </div>
-                <Badge bg="warning"><StarFill size={10} className="align-baseline" />{episode.episode_rating}</Badge>
-                <ChatLeftText />
-                {episode.episode_watched_history ? <EyeFill className="text-success" /> : <EyeSlashFill className="text-dark" />}
-            </div>
-        </components.Option>
+            </components.Option>
+            <Badge bg="warning"><StarFill size={10} className="align-baseline" />{episode.episode_rating}</Badge>
+            <Button variant="link" className="p-0 d-flex" ><ChatLeftText /></Button >
+            <EpisodeWatchStatus episodeId={episode.episode_id} />
+        </div>
     );
 };
 
