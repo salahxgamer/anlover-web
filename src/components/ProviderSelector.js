@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { Badge, Spinner } from 'react-bootstrap';
 import { XCircleFill } from 'react-bootstrap-icons';
 import Select, { components, createFilter } from 'react-select';
-import Provider from '../classes/Provider';
+import Provider from '../models/Provider';
 
 
 
