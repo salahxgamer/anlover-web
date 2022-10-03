@@ -2,27 +2,26 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 import { toast } from "react-toastify";
-import Provider from '../classes/Provider';
 import ProviderSelector from '../components/ProviderSelector';
 import { addEpisodeToHistory, getEpisodeFromHistory } from "../utils/db";
+import Episode from '../models/Episode';
 
 export default class EpisodePlayer extends Component {
     static propTypes = {
-        providers: PropTypes.arrayOf(PropTypes.object).isRequired
+        episode: PropTypes.instanceOf(Episode).isRequired
     }
 
     constructor(props) {
         super(props);
         this.state = {
             episode: props.episode,
-            providers: props.providers.map(provider => new Provider(provider)),
             urlIndex: -1,
             selectedProvider: null,
         }
     }
 
     componentDidMount() {
-        const { providers } = this.state;
+        const { providers } = this.state.episode;
         let autoSelectedProvider = null;
         providers.forEach(provider => {
             provider.resolve().finally(() => this.forceUpdate());
@@ -36,7 +35,7 @@ export default class EpisodePlayer extends Component {
     }
 
     componentWillUnmount() {
-        const { providers } = this.state;
+        const { providers } = this.state.episode;
         providers.forEach(provider => provider.cancel())
     }
 
@@ -49,12 +48,12 @@ export default class EpisodePlayer extends Component {
     }
 
     saveWatchProgress = ({ played }) => {
-        if (!played) return this.saveWatchProgress({ played: this.player.getCurrentTime() / this.player.getDuration() })
-        addEpisodeToHistory({ episodeId: this.state.episode.episode_id, progress: played })
+        if (!played) played = this.player.getCurrentTime() / this.player.getDuration()
+        addEpisodeToHistory({ episodeId: this.state.episode.id, progress: played })
     }
 
     resumeWatchProgress = async () => {
-        const episodeProgress = (await getEpisodeFromHistory(this.state.episode.episode_id)).progress
+        const episodeProgress = (await getEpisodeFromHistory(this.state.episode.id))?.progress
         if (this.player && episodeProgress) {
             this.player.seekTo(episodeProgress)
             toast.info("Episode was resumed...", { toastId: "EPISODE_RESUMED" })
@@ -62,11 +61,9 @@ export default class EpisodePlayer extends Component {
     }
 
     render() {
-        const { providers, selectedProvider, urlIndex } = this.state
-        // eslint-disable-next-line no-unused-vars
-        const { providers: _, ...newProps } = this.props
+        const { episode: { providers }, selectedProvider, urlIndex } = this.state
         return (
-            <div className="shadow rounded w-100 bg-dark d-flex flex-column align-items-stretch" style={{ maxHeight: "90vh" }} {...newProps}>
+            <div className="shadow rounded w-100 bg-dark d-flex flex-column align-items-stretch" style={{ maxHeight: "90vh" }}>
                 <ReactPlayer url={selectedProvider?.urls?.at(urlIndex)}
                     playing controls
                     width="100%" height="100%"

@@ -7,6 +7,7 @@ import { withParams } from '../utils/helper'
 import API from '../utils/api'
 import ScrollToTop from '../components/ScrollToTop';
 import EpisodePlayer from '../components/EpisodePlayer';
+import EpisodeModel from '../models/Episode';
 
 class Episode extends Component {
     static propTypes = {
@@ -21,8 +22,6 @@ class Episode extends Component {
             // empty object as placeholder
             episode: {},
             loading: true,
-            player_url: "",
-            providers: []
         }
     }
 
@@ -34,28 +33,29 @@ class Episode extends Component {
                 error: 'Couldn\'t load episode'
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
-            .then(episode => { this.setState({ episode, providers: episode.providers }); return episode })
+            .then(serializedEpisode => new EpisodeModel(serializedEpisode))
+            .then(episode => { this.setState({ episode }); return episode })
             .catch(err => { this.setState({ episode: null }); console.error(err) })
             .finally((() => { this.setState({ loading: false }) }))
 
     }
     render() {
-        const { episode, providers, loading } = this.state
+        const { episode, loading } = this.state
         return (
             <Container fluid>
-                <Helmet><title>{`Episode : ${episode.episode_name}`}</title></Helmet>
+                <Helmet><title>{`Episode : ${episode.name}`}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
                     {loading && <Spinner animation="grow" variant="primary" />}
-                    Episode : {episode?.episode_name}
+                    Episode : {episode.name}
                 </h1 >
                 {!loading && episode &&
                     <Container fluid>
                         <Row>
 
                             <Col className="d-flex flex-column align-items-center justify-content-center mb-4">
-                                <EpisodePlayer providers={providers} episode={episode} />
+                                <EpisodePlayer episode={episode} />
                             </Col>
 
                         </Row>
