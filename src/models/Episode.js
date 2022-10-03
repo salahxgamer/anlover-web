@@ -22,12 +22,12 @@ export default class Episode {
     /**
      * @type {number}
      */
-    skip_from = null;
+    skipFrom = null;
 
     /**
      * @type {number}
      */
-    skip_to = null;
+    skipTo = null;
 
     /**
      * @type {number}
@@ -37,7 +37,7 @@ export default class Episode {
     /**
      * @type {number}
      */
-    rating_user_count = null;
+    ratingUserCount = null;
 
     /**
      * @type {Provider[]}
@@ -53,10 +53,10 @@ export default class Episode {
         this.id = serializedEpisode.episode_id;
         this.name = serializedEpisode.episode_name;
         this.number = serializedEpisode.episode_number;
-        this.skip_from = serializedEpisode.skip_from;
-        this.skip_to = serializedEpisode.skip_to;
+        this.skipFrom = serializedEpisode.skip_from;
+        this.skipTo = serializedEpisode.skip_to;
         this.rating = serializedEpisode.episode_rating;
-        this.rating_user_count = serializedEpisode.episode_rating_user_count;
+        this.ratingUserCount = serializedEpisode.episode_rating_user_count;
         try {
             this.providers = serializedEpisode.providers.map(serializedProvider => new Provider(serializedProvider));
         } catch (e) {
