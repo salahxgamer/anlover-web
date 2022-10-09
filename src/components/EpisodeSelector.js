@@ -5,13 +5,14 @@ import { ChatLeftText, StarFill } from 'react-bootstrap-icons';
 import { useNavigate } from 'react-router-dom';
 import Select, { components, createFilter } from 'react-select';
 import EpisodeWatchStatus from './EpisodeWatchStatus';
+import Episode from '../models/Episode';
 
 import "../styles/EpisodeSelector.scss";
 
 /**
  * A React component that renders a Select component with a list of episodes.
  * The component will navigate to the selected episode if no onSelect prop is provided.
- * @param {Array<Object>} episodes - An array of episodes to display in the Select component.
+ * @param {Array<Episode>} episodes - An array of episodes to display in the Select component.
  * @param {Function} onSelect - A function to call when an episode is selected.
  */
 export default function EpisodeSelector({ episodes, onSelect, ...props }) {
@@ -36,12 +37,12 @@ export default function EpisodeSelector({ episodes, onSelect, ...props }) {
             options={episodes}
             styles={{ menu: (base) => ({ ...base, position: 'relative' }) }}
 
-            getOptionLabel={ep => ep.episode_name}
-            getOptionValue={ep => ep.episode_id}
+            getOptionLabel={ep => ep.name}
+            getOptionValue={ep => ep.id}
             isOptionSelected={() => false} // we don't really care about this so just return false to make things faster
             components={{ Option: EpisodeOption }}
 
-            onChange={episode => { onSelect ? onSelect(episode) : navigate(`/episode/${episode.episode_id}`) }}
+            onChange={episode => { onSelect ? onSelect(episode) : navigate(`/episode/${episode.id}`) }}
 
             {...props}
         />
@@ -49,7 +50,7 @@ export default function EpisodeSelector({ episodes, onSelect, ...props }) {
 }
 
 EpisodeSelector.propTypes = {
-    episodes: PropTypes.array.isRequired,
+    episodes: PropTypes.arrayOf(PropTypes.instanceOf(Episode)).isRequired,
     onSelect: PropTypes.func
 };
 
@@ -64,15 +65,15 @@ const EpisodeOption = ({ children, ...props }) => {
     const newProps = { ...props, innerProps: rest };
     const episode = props.data
     return (
-        <div className='hstack gap-3'>
-            <components.Option className="episode-option" {...newProps}>
+        <div className='hstack gap-3 episode-option pe-2'>
+            <components.Option {...newProps}>
                 <div className='me-auto'>
                     {children}
                 </div>
             </components.Option>
-            <Badge bg="warning"><StarFill size={10} className="align-baseline" />{episode.episode_rating}</Badge>
+            <Badge bg="warning"><StarFill size={10} className="align-baseline" />{episode.rating}</Badge>
             <Button variant="link" className="p-0 d-flex" ><ChatLeftText /></Button >
-            <EpisodeWatchStatus episodeId={episode.episode_id} />
+            <EpisodeWatchStatus episodeId={episode.id} />
         </div>
     );
 };

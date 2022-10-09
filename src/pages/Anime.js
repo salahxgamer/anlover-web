@@ -8,6 +8,7 @@ import EpisodeSelector from '../components/EpisodeSelector';
 import ScrollToTop from '../components/ScrollToTop';
 import API from '../utils/api';
 import { withParams } from '../utils/helper';
+import AnimeModel from '../models/Anime';
 
 
 class Anime extends Component {
@@ -34,6 +35,7 @@ class Anime extends Component {
                 error: 'Couldn\'t load anime'
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
+            .then(serializedAnime => new AnimeModel(serializedAnime))
             .then(anime => { this.setState({ anime }) })
             .catch(() => { this.setState({ anime: null }) }) // setting anime to null to test for it later
             .finally((() => { this.setState({ loading: false }) }))
@@ -50,7 +52,7 @@ class Anime extends Component {
 
         return (
             <Container fluid>
-                <Helmet><title>{`Anime : ${anime.anime_name}`}</title></Helmet>
+                <Helmet><title>{`Anime : ${anime?.title}`}</title></Helmet>
                 <ScrollToTop />
                 <h1 className="my-2">
                     {/* Display spinner while loading */}
@@ -63,7 +65,7 @@ class Anime extends Component {
 
                             {/* Background image */}
                             <div className="position-absolute h-100" style={{
-                                backgroundImage: `url(${anime.anime_banner_image_url || anime.anime_cover_image_full_url || anime.anime_cover_image_url})`,
+                                backgroundImage: `url(${anime.images.banner || anime.images.coverFull || anime.images.cover})`,
                                 backgroundSize: "cover",
                                 backgroundPosition: "center",
                                 backgroundRepeat: "no-repeat",
@@ -76,15 +78,15 @@ class Anime extends Component {
                                 <div className="p-5 d-flex justify-content-center align-items-center h-100">
                                     <img style={{ width: "100%" }}
                                         className="rounded shadow"
-                                        src={anime.anime_cover_image_full_url || anime.anime_cover_image_url}
-                                        alt={anime.anime_name} />
+                                        src={anime.images.coverFull || anime.images.cover}
+                                        alt={anime.title} />
                                 </div>
                             </Col>
 
                             <Col md={8} className="d-flex flex-column justify-content-center p-5">
                                 <div className="text-bg-dark opacity-75 p-4 rounded-3 shadow h-100">
 
-                                    <h2> {anime.anime_name} </h2>
+                                    <h2> {anime.title} </h2>
 
 
                                     <Accordion defaultActiveKey={["description", "details", "rating"]} alwaysOpen flush
@@ -106,7 +108,7 @@ class Anime extends Component {
                                         <Accordion.Item eventKey="description">
                                             <Accordion.Header><h5 className="m-0">Description</h5></Accordion.Header>
                                             <Accordion.Body>
-                                                <p> {anime.anime_description}</p>
+                                                <p> {anime.description}</p>
                                             </Accordion.Body>
                                         </Accordion.Item>
 
@@ -116,13 +118,13 @@ class Anime extends Component {
                                                 {/* Anime details table */}
                                                 <Table striped variant="dark" size="sm">
                                                     <tbody>
-                                                        <tr><td>Year        </td><td>{anime.anime_release_year}</td></tr>
-                                                        <tr><td>Studio        </td><td>{anime.more_info_result?.anime_studios}</td></tr>
-                                                        <tr><td>Episodes      </td><td>{anime.more_info_result?.episodes || anime.episodes?.data?.length}</td></tr>
-                                                        <tr><td>Rating        </td><td>{anime.anime_rating}</td></tr>
-                                                        <tr><td>Genres        </td><td>{anime.anime_genres}</td></tr>
-                                                        <tr><td>Duration      </td><td>{anime.more_info_result?.duration}</td></tr>
-                                                        <tr><td>Airing status </td><td>{anime.anime_status}</td></tr>
+                                                        <tr><td>Year        </td><td>{anime.releaseYear}</td></tr>
+                                                        <tr><td>Studio        </td><td>{anime.studiosLabels}</td></tr>
+                                                        <tr><td>Episodes      </td><td>{anime.episodesCount}</td></tr>
+                                                        <tr><td>Rating        </td><td>{anime.rating}</td></tr>
+                                                        <tr><td>Genres        </td><td>{anime.genresLabels.join(" ")}</td></tr>
+                                                        <tr><td>Duration      </td><td>{anime.duration}</td></tr>
+                                                        <tr><td>Airing status </td><td>{anime.status}</td></tr>
                                                     </tbody>
                                                 </Table>
                                             </Accordion.Body>
@@ -132,9 +134,9 @@ class Anime extends Component {
                                             <Accordion.Header><h5 className="m-0">Rating</h5></Accordion.Header>
                                             <Accordion.Body>
                                                 {/* Anime content ratings */}
-                                                {anime.content_rating?.map(rating =>
+                                                {anime.contentRating?.map(rating =>
                                                     <Badge key={rating.content_type} bg={ratingLevelColor[rating.level]} className={`ms-2 text-bg-${ratingLevelColor[rating.level]}`}>
-                                                        {rating?.content_type?.replaceAll('_', ' ')} : {rating?.level}
+                                                        {rating.label} : {rating.level}
                                                     </Badge>
                                                 )}
                                             </Accordion.Body>
@@ -148,15 +150,15 @@ class Anime extends Component {
                             <h2>Trailer :</h2>
                             <Col>
                                 <div className="p-5 d-flex justify-content-center align-items-center">
-                                    <ReactPlayer className="rounded shadow overflow-hidden" url={anime.more_info_result?.trailer_url} controls light pip playing />
+                                    <ReactPlayer className="rounded shadow overflow-hidden" url={anime.trailerUrl} controls light pip playing />
                                 </div>
                             </Col>
                         </Row>
                         <Row>
                             <Col>
-                                <h2 id="episodes">Episodes : {anime.more_info_result?.episodes || anime.episodes?.data?.length}</h2>
+                                <h2 id="episodes">Episodes : {anime.episodesCount}</h2>
 
-                                <EpisodeSelector episodes={anime?.episodes?.data} />
+                                <EpisodeSelector episodes={anime.episodes} />
 
                             </Col>
                         </Row>
