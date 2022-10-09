@@ -58,7 +58,7 @@ export default class Episode {
         this.rating = serializedEpisode.episode_rating;
         this.ratingUserCount = serializedEpisode.episode_rating_user_count;
         try {
-            this.providers = serializedEpisode.providers.map(serializedProvider => new Provider(serializedProvider));
+            this.providers = serializedEpisode.providers?.map(serializedProvider => new Provider(serializedProvider));
         } catch (e) {
             this.providers = serializedEpisode.providers;
         }
