@@ -12,7 +12,7 @@ export default class API {
     }
 
     static errorHandler(err) {
-        console.error(err);
+        // console.error(err);
         throw err;
     }
 
@@ -34,7 +34,7 @@ export default class API {
      * @param  {number} anime_id Anime id
      */
     static getAnime(anime_id) {
-        return this.server.get(`/anime/${anime_id}`).then(rsp => rsp.data).catch(this.errorHandler);
+        return this.server.get(`/anime/${anime_id}?more_info=Yes`).then(rsp => rsp.data).catch(this.errorHandler);
     }
 
     /**
