@@ -137,7 +137,7 @@ class Anime {
 
         /**
          * Anime images (cover, banner...)
-         * @type {?Array<{cover:string, coverFull:string, banner:string}>}
+         * @type {?{cover:string, coverFull:string, banner:string}}
          * @public
          */
         this.images = {
