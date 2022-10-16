@@ -1,0 +1,41 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
+
+
+.anime-details {
+    position: relative;
+    overflow: hidden;
+
+    .poster {
+        max-width: 180px;
+        height: fit-content;
+    }
+
+    .backdrop {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        filter: blur(20px);
+        opacity: 0.3;
+        z-index: -1;
+    }
+
+    .details-container {
+
+        @include media-breakpoint-down(sm) {
+            text-align: center;
+
+            .info-tags,
+            .action-container {
+                justify-content: center;
+            }
+        }
+    }
+}
