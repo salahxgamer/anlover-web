@@ -56,10 +56,13 @@ function AnimeDetails(props) {
                             <span className="fw-light">{anime.duration}</span>
                         </div>
                         <div className="hstack gap-2 flex-wrap my-3 action-container">
-                            <Button as={Link} to="#episodes" className="d-flex align-items-center">
-                                <Play size="1.3em" className="me-2" />
-                                Watch now
-                            </Button>
+                            {/* // TODO: add ability to resume from last episode */}
+                            {anime.episodes &&
+                                <Button as={Link} to={`/episode/${anime.episodes?.at(0)?.id}`} className="d-flex align-items-center">
+                                    <Play size="1.3em" className="me-2" />
+                                    Watch now
+                                </Button>
+                            }
                             <Dropdown>
                                 <Dropdown.Toggle variant="secondary" className="d-flex align-items-center">
                                     <Plus size="1.3em" className="me-2" />
