@@ -222,7 +222,13 @@ class Anime {
          * @type {?Array<(Anime|Object)>}
          * @public
          */
-        this.recommendations = serializedAnime.related_recommendations?.data?.map(serializedRelatedAnime => new Anime(serializedRelatedAnime));
+        this.recommendations = serializedAnime.related_recommendations?.data?.map(serializedRelatedAnime =>
+            new Anime(
+                Object.fromEntries(Object.entries(serializedRelatedAnime)
+                    .filter(([key]) => key.startsWith("recommended_"))
+                    .map(([key, val]) => [key.replace("recommended_", ""), val]))
+            )
+        );
 
         /**
          * News related to this anime
