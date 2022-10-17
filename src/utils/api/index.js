@@ -51,6 +51,9 @@ export default class API {
         const headers = { 'user-agent': "Mozilla/5.0 (Windows NT 6.3; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/105.0.0.0 Safari/537.36" }
         const blacklistHeaders = ["sec-ch.*"]
 
+        // temporary fembed.com provider fix
+        if (url.includes('fembed.com')) delete headers['user-agent'];
+
         const method = Decoder?.DeServers?.find(prov => url.includes(prov?.name))?.rq === 1 ? "POST" : "GET"
 
         return this.server({
@@ -66,6 +69,8 @@ export default class API {
         })
             .then(rsp => rsp.data)
             .then(content => Decoder?.decode(url, content))
+            // temporary fembed.com provider fix
+            .then(decoded => { if (decoded.url.includes('fembed.com')) decoded.urls = decoded.urls?.map(url => `/api/v1/proxy?url=${url}`); return decoded })
             .catch(this.errorHandler)
     }
 }
