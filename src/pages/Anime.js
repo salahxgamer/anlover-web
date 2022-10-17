@@ -2,10 +2,11 @@ import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { Col, Container, Row, Spinner } from 'react-bootstrap';
 import { Helmet } from 'react-helmet';
-import ReactPlayer from 'react-player';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import AnimeDetails from '../components/AnimeDetails';
+import AnimeTrailer from '../components/AnimeTrailer';
+import AnimeSuggestions from '../components/AnimeSuggestions';
 import EpisodeSelector from '../components/EpisodeSelector';
 import ScrollToTop from '../components/ScrollToTop';
 import AnimeModel from '../models/Anime';
@@ -31,7 +32,18 @@ class Anime extends Component {
     }
 
     componentDidMount() {
-        toast.promise(API.getAnime(this.props.params?.animeId),
+        this.fetchAnime(this.props.params?.animeId);
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props.params?.animeId !== prevProps.params?.animeId) {
+            this.fetchAnime(this.props.params?.animeId);
+        }
+    }
+
+    fetchAnime(animeId) {
+        this.setState({ loading: true, error: null });
+        toast.promise(API.getAnime(animeId),
             {
                 pending: 'Loading anime ...',
                 success: 'Anime loaded successfuly',
@@ -39,11 +51,11 @@ class Anime extends Component {
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
             .then(serializedAnime => new AnimeModel(serializedAnime))
-            .then(anime => { this.setState({ anime }) })
-            .catch((error) => { this.setState({ anime: null, error }) })
-            .finally((() => { this.setState({ loading: false }) }))
-
+            .then(anime => { this.setState({ anime }); })
+            .catch((error) => { this.setState({ anime: null, error }); })
+            .finally((() => { this.setState({ loading: false }); }));
     }
+
     render() {
         const { anime, loading, error } = this.state
 
@@ -71,18 +83,28 @@ class Anime extends Component {
                     <AnimeDetails anime={anime} />
                 </Row>
                 <Container>
-                    <Row as="section">
+                    <Row as="section" className="mt-3" id="trailer">
                         <h2>Trailer :</h2>
                         <Col>
-                            <div className="p-5 d-flex justify-content-center align-items-center">
-                                <ReactPlayer className="rounded shadow overflow-hidden" url={anime.trailerUrl} controls light pip playing />
-                            </div>
+                            <AnimeTrailer trailerUrl={anime.trailerUrl} />
                         </Col>
                     </Row>
-                    <Row>
-                        <h2 id="episodes">Episodes : {anime.episodesCount}</h2>
+                    <Row as="section" className="mt-3" id="episodes">
+                        <h2 >Episodes : {anime.episodesCount}</h2>
                         <Col>
                             <EpisodeSelector episodes={anime.episodes} />
+                        </Col>
+                    </Row>
+                    <Row as="section" className="mt-3" id="related">
+                        <h2 >Related :</h2>
+                        <Col>
+                            <AnimeSuggestions animes={anime.relatedAnimes} />
+                        </Col>
+                    </Row>
+                    <Row as="section" className="mt-3" id="recommended">
+                        <h2 >Recommended :</h2>
+                        <Col>
+                            <AnimeSuggestions animes={anime.recommendations} />
                         </Col>
                     </Row>
                 </Container>
