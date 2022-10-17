@@ -1,12 +1,13 @@
-import React, { Component } from 'react'
-import { Col, Container, Row, Spinner } from 'react-bootstrap'
-import { Helmet } from 'react-helmet'
-import { toast } from 'react-toastify'
-import AnimeCard from '../components/AnimeCard'
-import AnimeSearch from '../components/AnimeSearch'
-import ScrollToTop from '../components/ScrollToTop'
-import API from '../utils/api'
-import { withSearchParams } from '../utils/helper'
+import React, { Component } from 'react';
+import { Col, Container, Row, Spinner } from 'react-bootstrap';
+import { Helmet } from 'react-helmet';
+import { toast } from 'react-toastify';
+import AnimeCard from '../components/AnimeCard';
+import AnimeSearch from '../components/AnimeSearch';
+import ScrollToTop from '../components/ScrollToTop';
+import AnimeModel from '../models/Anime';
+import API from '../utils/api';
+import { withSearchParams } from '../utils/helper';
 
 class Animes extends Component {
     static propTypes = {}
@@ -14,8 +15,8 @@ class Animes extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            // empty objects as placeholders
-            animes: new Array(12).fill({}),
+            /** @type {AnimeModel[]} */
+            animes: null,
             loading: true,
             initialFilters: {
                 _offset: 0,
@@ -44,6 +45,7 @@ class Animes extends Component {
                 error: 'Couldn\'t load animes'
             }, { toastId: "PAGE_LOADING", autoClose: 500 })
             .then(rsp => rsp.data)
+            .then(serializedAnimes => serializedAnimes?.map(anime => new AnimeModel(anime)))
             .then(animes => { this.setState({ animes }) })
             .catch(() => { this.setState({ animes: [] }) })
             .finally((() => { this.setState({ loading: false }) }))
@@ -70,11 +72,18 @@ class Animes extends Component {
                     />
                     <Row className="g-4 mb-5">
                         {
-                            this.state.animes?.map((anime, index) => (
-                                <Col className="d-flex align-items-center justify-content-center" xs={6} sm={4} md={3} lg={2} key={index}>
-                                    <AnimeCard anime={anime} placeholder={this.state.loading} />
-                                </Col>
-                            ))
+                            this.state.loading ?
+                                new Array(12).fill().map((_, index) => (
+                                    <Col className="d-flex align-items-center justify-content-center" xs={6} sm={4} md={3} lg={2} key={index}>
+                                        <AnimeCard.Placeholder />
+                                    </Col>
+                                ))
+                                :
+                                this.state.animes?.map((anime, index) => (
+                                    <Col className="d-flex align-items-center justify-content-center" xs={6} sm={4} md={3} lg={2} key={index}>
+                                        <AnimeCard anime={anime} />
+                                    </Col>
+                                ))
                         }
                         {!this.state.animes?.length && !this.state.loading && (
                             <h1 className="text-center">No Animes Found :(</h1>
